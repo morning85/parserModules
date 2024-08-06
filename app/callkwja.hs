@@ -1,7 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 
 import qualified System.Environment as E --base
-import qualified Text.KWJA as KW              
+import qualified Parser.KWJA as KW              
 import qualified Data.Text as T               --text
 import qualified Data.Text.IO as T            --text
 import qualified Text.Show.Unicode as U

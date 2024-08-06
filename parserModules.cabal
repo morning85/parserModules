@@ -25,7 +25,7 @@ source-repository head
 
 library
   exposed-modules:
-      Text.KWJA
+      Parser.KWJA
   other-modules:
       Lib
       Paths_parserModules

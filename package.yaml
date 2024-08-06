@@ -34,7 +34,7 @@ library:
   source-dirs: src
   default-extensions: OverloadedStrings
   exposed-modules:
-  - Text.KWJA
+  - Parser.KWJA
 
 executables:
   parserModules-exe:

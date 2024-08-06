@@ -10,7 +10,7 @@ Stability   : experimental
 A parser for the output text of a Japanese text analyzer, KWJA.
 -}
 
-module Text.KWJA (
+module Parser.KWJA (
     KWJAData(..),
     Arg(..),
     KWJANode(..),
@@ -23,12 +23,12 @@ import qualified Data.Text as T         -- text
 import qualified Data.Text.IO as T      -- text
 import qualified Shelly as S            -- shelly
 import qualified Text.Show.Unicode as U -- unicode-show
-import qualified Debug.Trace as D       -- for debug
+-- import qualified Debug.Trace as D       -- for debug
 import Text.Parsec                      -- parsec
 import Text.Parsec.Text                 -- parsec
-import Text.Parsec.Combinator           -- parsec
+-- import Text.Parsec.Combinator           -- parsec
 import Data.Char (isDigit)              -- base
-import Text.Directory (checkFile,checkDir,getFileList) --nlp-tools
+import Text.Directory (checkFile) --nlp-tools
 
 
 data Arg = Arg {
@@ -139,89 +139,89 @@ quoteParser = do
 -- | +から始まるkwjaの行をパーズする
 kwjaNode :: Parser KWJAData
 kwjaNode = do
-    char '+'
+    _ <- char '+'
     sep
-    dest <- (try (string "-1")) <|> (many1 digit)
-    nodeType <- oneOf "DPAI"
+    d <- (try (string "-1")) <|> (many1 digit)
+    nt <- oneOf "DPAI"
     optional sep
     optional $ try ne                               -- NEの情報は捨てる
-    args <-  optionMaybe $ many argParser           -- 項構造データ(ないときもある
-    cats <- optionMaybe $ many (try kwjaCategory)   -- 体言 | 用言 | [用言,体言]
+    arg <-  optionMaybe $ many argParser           -- 項構造データ(ないときもある
+    c <- optionMaybe $ many (try kwjaCategory)   -- 体言 | 用言 | [用言,体言]
     optional $ try sm                               -- <SM-主体>は捨てる
-    tense <- optionMaybe $ try tenseLevelParser         -- 時制
-    level <- optionMaybe $ try tenseLevelParser         -- レベル
-    others <- optionMaybe $ many (othersParser)     -- その他
-    return $ KWJA KWJANode {dest = (read dest),
-                            nodeType = nodeType,
-                            args = args,
-                            cats = cats,
-                            tense = tense,
-                            level = level,
-                            others = others}
+    t <- optionMaybe $ try tenseLevelParser         -- 時制
+    l <- optionMaybe $ try tenseLevelParser         -- レベル
+    other <- optionMaybe $ many (othersParser)     -- その他
+    return $ KWJA KWJANode {dest = (read d),
+                            nodeType = nt,
+                            args = arg,
+                            cats = c,
+                            tense = t,
+                            level = l,
+                            others = other}
 
 -- <rel type="ガ" target="太郎" sid="202407121752-0-1" id="0"/>
 argParser :: Parser Arg
 argParser = do
-    try $ string "<rel type="
-    argType <- quoteParser
+    _ <- try $ string "<rel type="
+    at <- quoteParser
     sep
-    string "target="
-    target <- quoteParser
+    _ <- string "target="
+    tar <- quoteParser
     optional sep
-    sid <- optionMaybe $ idParser "sid"
-    argId <- optionMaybe $ idParser "id"
-    string "/>"
-    return $ Arg {argType = argType, 
-                    target = target, 
-                    sid = sid, 
-                    argId = argId}
+    s <- optionMaybe $ idParser "sid"
+    ai <- optionMaybe $ idParser "id"
+    _ <- string "/>"
+    return $ Arg {argType = at, 
+                    target = tar, 
+                    sid = s, 
+                    argId = ai}
     where 
         idParser :: String -> Parser Int
         idParser str = do
-            string $ str ++ "="
-            id <- quoteParser
+            _ <- string $ str ++ "="
+            i <- quoteParser
             optional sep
-            return $ read $ (filter (\x -> isDigit x) id)
+            return $ read $ (filter (\x -> isDigit x) i)
 
 -- | 体言か用言かをパーズする
 kwjaCategory :: Parser T.Text
 kwjaCategory = do
-    try (char '<')
+    _ <- try (char '<')
     s <- (string "用") <|> (string "体")
     cat <- many $ noneOf ">"
-    char '>'
+    _ <- char '>'
     return $ T.pack $ s ++ cat
 
 -- | 時制とレベルをパーズする
 tenseLevelParser :: Parser T.Text
 tenseLevelParser = do
-    try (char '<')
-    s <- (string "時制") <|> (string "レベル")
-    char ':'
+    _ <- try (char '<')
+    _ <- (string "時制") <|> (string "レベル")
+    _ <- char ':'
     tenseOrLevel <- many $ noneOf ">"
-    char '>'
+    _ <- char '>'
     return $ T.pack tenseOrLevel
 
 -- | レベル以降の情報をパーズする
 othersParser :: Parser T.Text
 othersParser = do
-    try (char '<')
+    _ <- try (char '<')
     s <- many $ noneOf ">"
-    char '>'
+    _ <- char '>'
     return $ T.pack s
 
 -- | Named Entityとしての情報
 ne :: Parser ()
 ne = do
-  try $ string "<NE:"
-  many1 $ noneOf ">"
-  char '>'
+  _ <- try $ string "<NE:"
+  _ <- many1 $ noneOf ">"
+  _ <- char '>'
   return ()
 
 -- | <SM-主体>
 sm :: Parser ()
 sm = do
-  try $ string "<SM-"
-  many1 $ noneOf ">"
-  char '>'
+  _ <- try $ string "<SM-"
+  _ <- many1 $ noneOf ">"
+  _ <- char '>'
   return ()
