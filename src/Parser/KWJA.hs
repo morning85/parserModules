@@ -1,7 +1,7 @@
+{-# LANGUAGE OverloadedStrings #-}
 -- {-# HADDOCK Markdown #-}
 {- |
-Module      : Text.KWJA
-Description : This is documentation tests.
+Module      : Parser.KWJA
 Copyright   : (c) morning85, 2024
 License     : All right reserved
 Maintainer  : Asa Tomita <tomita.asa@is.ocha.ac.jp> 
@@ -47,12 +47,12 @@ data KWJANode = KWJANode {
     -- | destination node id
     dest :: Int,       
     -- |
-    -- it can be D | P | A | I     
+    --  D or P or A or I     
     nodeType :: Char,   
     -- |list of argument structures  
     args :: Maybe [Arg],    
     -- | category
-    -- it can be 体言 | 用言 | [用言,体言]
+    -- 体言 or 用言 or [用言,体言]
     cats :: Maybe [T.Text], 
     -- | tense
     tense :: Maybe T.Text,  
@@ -82,7 +82,7 @@ data KWJAData =
     deriving (Eq, Show)
 
 
--- | The 'square' function squares an integer.
+-- | テキストをkwjaで解析し、`KWJAData`として返す
 callKWJA :: T.Text -> IO [KWJAData]
 callKWJA text = do
     kwjaText <- fromText text
