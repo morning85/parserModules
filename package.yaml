@@ -35,6 +35,7 @@ library:
   default-extensions: OverloadedStrings
   exposed-modules:
   - Parser.KWJA
+  - Juman.JumanKatuyou
 
 executables:
   parserModules-exe:
