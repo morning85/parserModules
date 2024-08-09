@@ -1,4 +1,4 @@
-module Juman.JumanKatuyou (
+module Parser.JumanKatuyou (
     JumanKatuyouGata(..),
     JumanKatuyouKei(..),
     parseKatuyouFromPath

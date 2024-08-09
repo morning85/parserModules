@@ -9,7 +9,7 @@ extra-source-files:
 - README.md
 - CHANGELOG.md
 
-description:         Please see the README on GitHub at <https://github.com/morning85s/parserModules#readme>
+description:         Please see the README on GitHub at <https://github.com/morning85/parserModules#readme>
 
 dependencies:
 - base >= 4.7 && < 5
@@ -18,6 +18,11 @@ dependencies:
 - shelly
 - parsec
 - unicode-show
+- directory >= 1.3.6.0
+- yaml >= 0.11.8.0
+- bytestring >= 0.10.12.0 
+- aeson
+- filepath
 
 ghc-options:
 - -Wall
@@ -35,7 +40,8 @@ library:
   default-extensions: OverloadedStrings
   exposed-modules:
   - Parser.KWJA
-  - Juman.JumanKatuyou
+  - Parser.ABC
+  - Parser.JumanKatuyou
 
 executables:
   parserModules-exe:
