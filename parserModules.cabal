@@ -6,7 +6,7 @@ cabal-version: 1.12
 
 name:           parserModules
 version:        0.1.0.0
-description:    Please see the README on GitHub at <https://github.com/morning85s/parserModules#readme>
+description:    Please see the README on GitHub at <https://github.com/morning85/parserModules#readme>
 homepage:       https://github.com/morning85/parserModules#readme
 bug-reports:    https://github.com/morning85/parserModules/issues
 author:         Asa Tomita
@@ -26,6 +26,7 @@ source-repository head
 library
   exposed-modules:
       Parser.KWJA
+      Juman.JumanKatuyou
   other-modules:
       Lib
       Paths_parserModules
