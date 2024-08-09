@@ -1,4 +1,4 @@
-module Parser.JumanKatuyou (
+module Juman.JumanKatuyou (
     JumanKatuyouGata(..),
     JumanKatuyouKei(..),
     parseKatuyouFromPath
@@ -6,7 +6,7 @@ module Parser.JumanKatuyou (
 
 import qualified Data.Text as T    --text
 import qualified Data.Text.IO as T --text
-import Text.Directory (checkFile) --nlp-tools
+import           Text.Directory (checkFile) --nlp-tools
 import           Text.Parsec
 import           Text.Parsec.Text --parsec
 
