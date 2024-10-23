@@ -48,7 +48,7 @@ data CCGcat =
   CP | CPf | CPt |CPt_sbj | CPq | CPq_sbj | CPx | FRAG | N | Ns |
   NP | NPq| NPR | NUM | NUMCLP | PP | PPs | PPs2 | PPo1 | PPo2 |
   PRO | Q | S | Sa | Se | Simp | Sm | Snml | Srel | Ssmc | Ssub |
-  WNUM | WPRO | INTJP | INTJ | LST | LS | PRN | MULTI_SENTENCE | SYM
+  WNUM | WPRO | INTJP | INTJ | LST | LS | PRN | MULTI_SENTENCE | SYM | P
   | Slash CCGcat CCGcat
   | BSlash CCGcat CCGcat
   | ERR
@@ -103,6 +103,7 @@ str2CCGcat s =
     "WPRO" -> WPRO
     "INTJP" -> INTJP; "INTJ" -> INTJ
     "LST" -> LST; "LS" -> LS; "PRN" -> PRN; "multi-sentence" -> MULTI_SENTENCE
+    "P" -> P
     _ -> ERR
 
 abcTree2sentence :: ABCTree -> T.Text
