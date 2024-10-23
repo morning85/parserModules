@@ -4,7 +4,7 @@
 Module      : Parser.KWJA
 Copyright   : (c) morning85, 2024
 License     : All right reserved
-Maintainer  : Asa Tomita <tomita.asa@is.ocha.ac.jp> 
+Maintainer  : Asa Tomita <tomita.asa@is.ocha.ac.jp>
 Stability   : experimental
 
 A parser for the output text of a Japanese text analyzer, KWJA.
@@ -15,7 +15,7 @@ module Parser.KWJA (
     Arg(..),
     KWJANode(..),
     callKWJA,
-    parseKWJAFromFile 
+    parseKWJAFromFile
     ) where
 
 import qualified Text.Juman as J        -- nlp-tools
@@ -36,8 +36,8 @@ data Arg = Arg {
     argType :: String,
     -- | target of the argument
     target :: String,
-    -- | sidereal time       
-    sid :: Maybe Int,      
+    -- | sidereal time
+    sid :: Maybe Int,
     -- | destination argument id
     argId :: Maybe Int
 } deriving (Eq)
@@ -45,40 +45,40 @@ data Arg = Arg {
 
 data KWJANode = KWJANode {
     -- | destination node id
-    dest :: Int,       
+    dest :: Int,
     -- |
-    --  D or P or A or I     
-    nodeType :: Char,   
-    -- |list of argument structures  
-    args :: Maybe [Arg],    
+    --  D or P or A or I
+    nodeType :: Char,
+    -- |list of argument structures
+    args :: Maybe [Arg],
     -- | category
     -- 体言 or 用言 or [用言,体言]
-    cats :: Maybe [T.Text], 
+    cats :: Maybe [T.Text],
     -- | tense
-    tense :: Maybe T.Text,  
+    tense :: Maybe T.Text,
     -- | level
-    level :: Maybe T.Text,  
+    level :: Maybe T.Text,
     -- | other KWJA data
-    others :: Maybe [T.Text] 
+    others :: Maybe [T.Text]
 } deriving (Eq)
 
 
 instance Show Arg where
-    show (Arg {argType = a, target = t, sid = s, argId = ai}) = 
-        concat ["(",a, ",", t, ",", show s, ",", show ai,")"] 
+    show (Arg {argType = a, target = t, sid = s, argId = ai}) =
+        concat ["(",a, ",", t, ",", show s, ",", show ai,")"]
 
 instance Show KWJANode where
-    show (KWJANode {dest=d, nodeType=n, args=a, cats=c, tense=t,level=l,others=o}) = 
-        concat ["(",show d, ",", show n, ",", show a, ",", show c, ",", show t, ",", show l, ",", show o, ")"] 
+    show (KWJANode {dest=d, nodeType=n, args=a, cats=c, tense=t,level=l,others=o}) =
+        concat ["(",show d, ",", show n, ",", show a, ",", show c, ",", show t, ",", show l, ",", show o, ")"]
 
 -- | Data format for KWJA analysis line
-data KWJAData = 
+data KWJAData =
     -- | line start with +
     KWJA KWJANode
     -- | other lines
-    | Juman J.JumanData 
+    | Juman J.JumanData
     -- | error
-    | Err String T.Text 
+    | Err String T.Text
     deriving (Eq, Show)
 
 
@@ -107,7 +107,7 @@ kwjaFilter :: [T.Text] -> [T.Text]
 kwjaFilter = filter (\l -> l /= T.empty
                                     && not (T.isPrefixOf "#" l)
                                     && not (T.isPrefixOf "*" l)
-                                    ) 
+                                    )
 
 -- |　KWJAの分析行をパーズし、KWJAData形式に変換する。
 kwjaParser :: T.Text -> KWJAData
@@ -171,11 +171,11 @@ argParser = do
     s <- optionMaybe $ idParser "sid"
     ai <- optionMaybe $ idParser "id"
     _ <- string "/>"
-    return $ Arg {argType = at, 
-                    target = tar, 
-                    sid = s, 
+    return $ Arg {argType = at,
+                    target = tar,
+                    sid = s,
                     argId = ai}
-    where 
+    where
         idParser :: String -> Parser Int
         idParser str = do
             _ <- string $ str ++ "="
