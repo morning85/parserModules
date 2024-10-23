@@ -29,7 +29,6 @@ library
       Parser.ABC
       Parser.JumanKatuyou
   other-modules:
-      Lib
       Paths_parserModules
   hs-source-dirs:
       src
