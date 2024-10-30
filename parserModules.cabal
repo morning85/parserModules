@@ -1,6 +1,6 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.36.0.
+-- This file has been generated from package.yaml by hpack version 0.37.0.
 --
 -- see: https://github.com/sol/hpack
 
@@ -41,6 +41,8 @@ library
     , bytestring >=0.10.12.0
     , directory >=1.3.6.0
     , filepath
+    , jsem
+    , lightblue
     , nlp-tools
     , parsec
     , shelly
@@ -62,6 +64,32 @@ executable parserModules-exe
     , bytestring >=0.10.12.0
     , directory >=1.3.6.0
     , filepath
+    , jsem
+    , lightblue
+    , nlp-tools
+    , parsec
+    , parserModules
+    , shelly
+    , text
+    , unicode-show
+    , yaml >=0.11.8.0
+  default-language: Haskell2010
+
+executable printEc
+  main-is: printLightblue.hs
+  other-modules:
+      Paths_parserModules
+  hs-source-dirs:
+      app
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      aeson
+    , base >=4.7 && <5
+    , bytestring >=0.10.12.0
+    , directory >=1.3.6.0
+    , filepath
+    , jsem
+    , lightblue
     , nlp-tools
     , parsec
     , parserModules
@@ -85,6 +113,8 @@ test-suite parserModules-test
     , bytestring >=0.10.12.0
     , directory >=1.3.6.0
     , filepath
+    , jsem
+    , lightblue
     , nlp-tools
     , parsec
     , parserModules

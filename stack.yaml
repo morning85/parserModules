@@ -5,3 +5,8 @@ extra-deps:
   # #nlp-tools
   - git: https://github.com/morning85/nlp-tools.git
     commit: aeb22beddf3bff56e2c13f8fef02cd6738dcab43
+  # #lightblue
+  - ../lightblue
+    #JSeM
+  - git: http://github.com/DaisukeBekki/JSeM.git
+    commit: d5705b42006a08aa9dd8d2ea37d29fc7cf5559f6
